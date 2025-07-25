@@ -1,12 +1,24 @@
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
 
-import { App } from "./app";
+import { routeTree } from "./route-tree-gen.ts";
 
-import "./index.css";
+const router = createRouter({ routeTree });
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: typeof router;
+	}
+}
+
+// biome-ignore lint/style/noNonNullAssertion: required by @Vite
+const rootElement = document.getElementById("root")!;
+if (!rootElement.innerHTML) {
+	const root = ReactDOM.createRoot(rootElement);
+	root.render(
+		<StrictMode>
+			<RouterProvider router={router} />
+		</StrictMode>
+	);
+}

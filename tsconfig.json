@@ -12,9 +12,8 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
-  }
+  },
+  "exclude": ["./src/route-tree-gen.ts"]
 }
